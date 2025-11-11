@@ -148,11 +148,6 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 - Computes dense optical flow using Farneback algorithm
 - Calculates motion magnitude between consecutive frames
 - Returns average motion across entire video
-
-**Use Cases**: 
-- Detecting action vs dialogue scenes
-- Identifying camera movement
-- Video content classification
 ---
 
 ### Feature 2: Text Detection (`analyze_text_ocr_easyocr`)
@@ -165,12 +160,6 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 - Filters results by confidence threshold
 - Extracts unique keywords (alphabetic, length ≥ 3)
 - Calculates ratio of frames containing text
-
-**Use Cases**:
-- Subtitle extraction
-- On-screen text indexing
-- Content categorization
-- Accessibility features
 ---
 
 ### Feature 3: Hard Cut Detection (`detect_hard_cuts`)
@@ -182,12 +171,6 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 - Detects cuts when difference exceeds threshold
 - Implements minimum scene length to avoid false positives
 - Records frame indices where cuts occur
-
-**Use Cases**:
-- Automatic video segmentation
-- Scene boundary detection
-- Video editing assistance
-- Content structure analysis
 ---
 
 ### Feature 4: Person vs Object Dominance (`analyze_person_object_dominance`)
@@ -200,12 +183,6 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 - Detects and classifies objects (80 classes)
 - Separates "person" class from other objects
 - Calculates various dominance metrics
-
-**Use Cases**:
-- Content type classification (person-focused vs object-focused)
-- Audience targeting
-- Video categorization
-- Analytics for marketing
 ---
 ## 📊 Output Format
 
