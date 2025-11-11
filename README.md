@@ -203,6 +203,7 @@ The tool returns a dictionary with the following structure:
   "person_to_object_ratio": 1.596
 }
 ```
+This tool also generates a .json file with the outputs in the specified location. 
 
 ### Output Fields Explained
 
