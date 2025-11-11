@@ -17,8 +17,6 @@ A comprehensive Python-based tool for extracting and analyzing various features 
 - [Output Format](#-output-format)
 - [Configuration](#-configuration)
 - [Examples](#-examples)
-- [Troubleshooting](#-troubleshooting)
-- [Contributing](#-contributing)
 - [License](#-license)
 
 ## ✨ Features
