@@ -74,27 +74,17 @@ cd video-feature-extractor
 
 ### Step 2: Install Dependencies
 
-#### Option A: Using pip (Recommended)
+#### Option A: Using pip
 
 ```bash
 pip install opencv-python numpy easyocr torch ultralytics
 ```
-
-#### Option B: Using requirements.txt
-
-```bash
-pip install -r requirements.txt
-```
-
-#### Option C: For Google Colab
-
-If you're using Google Colab, run this in a code cell:
-
+#### Option B: For Google Colab
 ```python
 !pip install opencv-python numpy easyocr ultralytics
 ```
 
-Then mount your Google Drive to access video files:
+Then mount Google Drive to access video files:
 
 ```python
 from google.colab import drive
@@ -121,7 +111,7 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 
 1. **Open the notebook**:
    ```bash
-   jupyter notebook video-extraction-tool.ipynb
+   jupyter notebook video-feature-extraction-tool.ipynb
    ```
 
 2. **Run the cells in order**:
@@ -132,40 +122,14 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 
 3. **Update the video path** in the last cell:
    ```python
-   video_path = "path/to/your/video.mp4"  # Change this to your video file
+   video_path = "path/to/your/video.mp4"  # Change this to the video file
    ```
 
 4. **Run the analysis**:
-   - The tool will process your video and display progress
+   - The tool will process the video and display progress
    - Results will be printed and saved as JSON
 
-### Method 2: Using Python Script
-
-1. **Create a Python script** (`analyze_video.py`):
-   ```python
-   import json
-   from video_extraction_tool import extract_video_features
-   
-   # Specify your video path
-   video_path = "sample_video.mp4"
-   
-   # Extract features
-   features = extract_video_features(video_path)
-   
-   # Display results
-   print(json.dumps(features, indent=2))
-   
-   # Save to file
-   with open("output_features.json", "w") as f:
-       json.dump(features, f, indent=2)
-   ```
-
-2. **Run the script**:
-   ```bash
-   python analyze_video.py
-   ```
-
-### Method 4: Google Colab
+### Method 2: Google Colab
 
 1. Upload the notebook to Google Colab
 2. Upload your video to Google Drive
@@ -191,14 +155,6 @@ print(f"GPU Available: {torch.cuda.is_available()}")
 - Detecting action vs dialogue scenes
 - Identifying camera movement
 - Video content classification
-
-**Example**:
-```python
-avg_motion = analyze_motion("video.mp4")
-print(f"Average Motion: {avg_motion:.2f}")
-# Output: Average Motion: 3.45
-```
-
 ---
 
 ### Feature 2: Text Detection (`analyze_text_ocr_easyocr`)
@@ -217,14 +173,6 @@ print(f"Average Motion: {avg_motion:.2f}")
 - On-screen text indexing
 - Content categorization
 - Accessibility features
-
-**Example**:
-```python
-text_info = analyze_text_ocr_easyocr("video.mp4")
-print(f"Text Present Ratio: {text_info['text_present_ratio']:.2%}")
-print(f"Keywords: {text_info['keywords'][:10]}")  # First 10 keywords
-```
-
 ---
 
 ### Feature 3: Hard Cut Detection (`detect_hard_cuts`)
@@ -242,16 +190,6 @@ print(f"Keywords: {text_info['keywords'][:10]}")  # First 10 keywords
 - Scene boundary detection
 - Video editing assistance
 - Content structure analysis
-
-**Example**:
-```python
-cuts = detect_hard_cuts("video.mp4")
-print(f"Total Cuts: {cuts['hard_cuts']}")
-print(f"Cut at frames: {cuts['cut_frames']}")
-# Output: Total Cuts: 5
-# Output: Cut at frames: [120, 245, 387, 521, 698]
-```
-
 ---
 
 ### Feature 4: Person vs Object Dominance (`analyze_person_object_dominance`)
@@ -270,44 +208,7 @@ print(f"Cut at frames: {cuts['cut_frames']}")
 - Audience targeting
 - Video categorization
 - Analytics for marketing
-
-**Example**:
-```python
-dominance = analyze_person_object_dominance("video.mp4")
-print(f"Person Detections: {dominance['person_detections']}")
-print(f"Object Detections: {dominance['object_detections']}")
-print(f"Person Ratio: {dominance['person_ratio']:.2%}")
-# Output: Person Detections: 142
-# Output: Object Detections: 89
-# Output: Person Ratio: 61.47%
-```
-
 ---
-
-### Combined Analysis (`extract_video_features`)
-
-**Purpose**: Run all feature extraction methods in a single function call.
-
-**How it works**:
-- Orchestrates all four analysis functions
-- Provides progress updates
-- Combines results into unified output
-- Optimizes processing with configurable frame sampling
-
-**Example**:
-```python
-# Analyze with default settings
-features = extract_video_features("video.mp4")
-
-# Analyze with custom settings
-features = extract_video_features(
-    video_path="video.mp4",
-    ocr_frame_step=15,        # Sample every 15th frame for OCR
-    det_frame_step=10,        # Sample every 10th frame for YOLO
-    yolo_model="yolov8x.pt"   #
-)
-```
-
 ## 📊 Output Format
 
 The tool returns a dictionary with the following structure:
@@ -344,107 +245,6 @@ The tool returns a dictionary with the following structure:
 | `object_ratio` | Ratio of object detections to total detections |
 | `person_to_object_ratio` | Person detections divided by object detections |
 
-## ⚙️ Configuration Options
-
-### Motion Analysis
-- No configuration needed - uses optimized Farneback parameters
-
-### Text Detection (OCR)
-- `ocr_frame_step`: Process every Nth frame (default: 10)
-- `languages`: List of language codes (default: ['en'])
-- `min_conf`: Minimum confidence threshold (default: 0.5)
-
-### Shot Cut Detection
-- `diff_threshold`: Pixel difference threshold for cut detection (default: 30.0)
-- `min_scene_length`: Minimum frames between cuts (default: 5)
-
-### Person/Object Detection
-- `model_path`: YOLO model to use (default: "yolov8x.pt")
-  - Options: "yolov8n.pt" (nano), "yolov8s.pt" (small), "yolov8m.pt" (medium), "yolov8l.pt" (large), "yolov8x.pt" (extra large)
-- `det_frame_step`: Process every Nth frame (default: 10)
-- `conf_thres`: Minimum confidence for detections (default: 0.5)
-
-## 💡 Examples
-
-### Example 1: Quick Analysis
-
-```python
-from video_extraction_tool import extract_video_features
-import json
-
-# Analyze video with default settings
-features = extract_video_features("sample_video.mp4")
-
-# Display results
-print(json.dumps(features, indent=2))
-```
-
-### Example 2: Custom Configuration
-
-```python
-# High-accuracy mode (slower)
-features = extract_video_features(
-    video_path="important_video.mp4",
-    ocr_frame_step=5,         # Check every 5th frame
-    det_frame_step=5,         # Check every 5th frame
-    yolo_model="yolov8x.pt"   # Largest, most accurate model
-)
-```
-
-### Example 3: Fast Processing Mode
-
-```python
-# Speed-optimized (faster, less accurate)
-features = extract_video_features(
-    video_path="long_video.mp4",
-    ocr_frame_step=30,        # Check every 30th frame
-    det_frame_step=30,        # Check every 30th frame
-    yolo_model="yolov8x.pt"  
-)
-```
-
-### Example 4: Batch Processing
-
-```python
-import os
-import json
-
-video_folder = "videos/"
-output_folder = "results/"
-
-for video_file in os.listdir(video_folder):
-    if video_file.endswith((".mp4", ".avi", ".mov")):
-        video_path = os.path.join(video_folder, video_file)
-        print(f"\nProcessing: {video_file}")
-        
-        features = extract_video_features(video_path)
-        
-        # Save results
-        output_file = os.path.join(output_folder, f"{video_file}_features.json")
-        with open(output_file, "w") as f:
-            json.dump(features, f, indent=2)
-        
-        print(f"Saved to: {output_file}")
-```
-
-### Example 5: Using Individual Functions
-
-```python
-# Only detect cuts
-from video_extraction_tool import detect_hard_cuts
-cuts = detect_hard_cuts("video.mp4", diff_threshold=35.0)
-print(f"Found {cuts['hard_cuts']} scene transitions")
-
-# Only analyze motion
-from video_extraction_tool import analyze_motion
-motion = analyze_motion("video.mp4")
-if motion > 5.0:
-    print("High-action video")
-elif motion > 2.0:
-    print("Moderate action")
-else:
-    print("Low-action/static video")
-```
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
