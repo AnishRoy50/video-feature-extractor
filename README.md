@@ -263,7 +263,7 @@ This project uses the following open-source libraries:
 - [PyTorch Documentation](https://pytorch.org/docs/)
 - [COCO Dataset](https://cocodataset.org/) - Object classes used by YOLO
 
-## � Contact
+## 📩 Contact
 - **Email**: royanish.career@gmail.com
 
 ---
